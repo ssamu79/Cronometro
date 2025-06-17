@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Cron髆etro y Temporizador</title>
+  <title>Cron贸metro y Temporizador</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -36,10 +36,10 @@
 </head>
 <body>
 
-  <h1>Cron髆etro y Temporizador</h1>
+  <h1>Cron贸metro y Temporizador</h1>
 
   <div class="seccion">
-    <h2>Cron髆etro</h2>
+    <h2>Cron贸metro</h2>
     <div id="cronometro" class="reloj">00:00:00</div>
     <button onclick="iniciarCrono()">Iniciar</button>
     <button onclick="pausarCrono()">Pausar</button>
@@ -57,7 +57,7 @@
   </div>
 
   <script>
-    // --- Cron髆etro ---
+    // --- Cron贸metro ---
     let cronoTiempo = 0, cronoIntervalo;
     function actualizarCrono() {
       let horas = Math.floor(cronoTiempo / 3600);
@@ -105,7 +105,7 @@
           } else {
             clearInterval(tempIntervalo);
             tempIntervalo = null;
-            alert("iempo terminado!");
+            alert("隆Tiempo terminado!");
           }
         }, 1000);
       }
