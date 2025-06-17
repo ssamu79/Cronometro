@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cronómetro y Temporizador</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    .reloj {
+      font-size: 3em;
+      margin: 20px 0;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    .seccion {
+      background-color: #fff;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Cronómetro y Temporizador</h1>
+
+  <div class="seccion">
+    <h2>Cronómetro</h2>
+    <div id="cronometro" class="reloj">00:00:00</div>
+    <button onclick="iniciarCrono()">Iniciar</button>
+    <button onclick="pausarCrono()">Pausar</button>
+    <button onclick="reiniciarCrono()">Reiniciar</button>
+  </div>
+
+  <div class="seccion">
+    <h2>Temporizador</h2>
+    <input type="number" id="minutos" placeholder="Minutos" min="0">
+    <input type="number" id="segundos" placeholder="Segundos" min="0" max="59">
+    <div id="temporizador" class="reloj">00:00</div>
+    <button onclick="iniciarTemporizador()">Iniciar</button>
+    <button onclick="pausarTemporizador()">Pausar</button>
+    <button onclick="reiniciarTemporizador()">Reiniciar</button>
+  </div>
+
+  <script>
+    // --- Cronómetro ---
+    let cronoTiempo = 0, cronoIntervalo;
+    function actualizarCrono() {
+      let horas = Math.floor(cronoTiempo / 3600);
+      let minutos = Math.floor((cronoTiempo % 3600) / 60);
+      let segundos = cronoTiempo % 60;
+      document.getElementById("cronometro").textContent =
+        `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+    }
+    function iniciarCrono() {
+      if (!cronoIntervalo) {
+        cronoIntervalo = setInterval(() => {
+          cronoTiempo++;
+          actualizarCrono();
+        }, 1000);
+      }
+    }
+    function pausarCrono() {
+      clearInterval(cronoIntervalo);
+      cronoIntervalo = null;
+    }
+    function reiniciarCrono() {
+      pausarCrono();
+      cronoTiempo = 0;
+      actualizarCrono();
+    }
+
+    // --- Temporizador ---
+    let tempTiempo = 0, tempIntervalo;
+    function actualizarTemporizador() {
+      let min = Math.floor(tempTiempo / 60);
+      let seg = tempTiempo % 60;
+      document.getElementById("temporizador").textContent =
+        `${String(min).padStart(2, '0')}:${String(seg).padStart(2, '0')}`;
+    }
+    function iniciarTemporizador() {
+      if (!tempIntervalo) {
+        let min = parseInt(document.getElementById("minutos").value) || 0;
+        let seg = parseInt(document.getElementById("segundos").value) || 0;
+        if (tempTiempo === 0) tempTiempo = min * 60 + seg;
+        actualizarTemporizador();
+        tempIntervalo = setInterval(() => {
+          if (tempTiempo > 0) {
+            tempTiempo--;
+            actualizarTemporizador();
+          } else {
+            clearInterval(tempIntervalo);
+            tempIntervalo = null;
+            alert("¡Tiempo terminado!");
+          }
+        }, 1000);
+      }
+    }
+    function pausarTemporizador() {
+      clearInterval(tempIntervalo);
+      tempIntervalo = null;
+    }
+    function reiniciarTemporizador() {
+      pausarTemporizador();
+      tempTiempo = 0;
+      document.getElementById("temporizador").textContent = "00:00";
+    }
+  </script>
+
+</body>
+</html>
